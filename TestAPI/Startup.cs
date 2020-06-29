@@ -11,7 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
-using ToDoAPI.Models;
+using TestAPI.Models; /*Adding in Dependency Injection (DI) container for later use
+                       * to provide service to the controllers. */
 
 namespace TestAPI
 {
@@ -27,6 +28,8 @@ namespace TestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ToDoContext>(opt =>
+            opt.UseInMemoryDatabase("ToDoList")); //We're using an in-memory database here
             services.AddControllers();
         }
 
