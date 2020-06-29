@@ -5,13 +5,15 @@ namespace TestAPI.Models
 {
     public class ToDoContext : DbContext
     {
+        internal object ToDoItem;
+
         public ToDoContext(DbContextOptions<ToDoContext> options)
             : base(options)
         {
 
         }
 
-        public DbSet<ToDoItem> ToDoItems { get; set; }
+        public DbSet<TodoItem> ToDoItems { get; set; }
         //Next, the DbContext needs to be registered with the dependency
         //injection (DI) containe. Container provides service to controllers.
     }

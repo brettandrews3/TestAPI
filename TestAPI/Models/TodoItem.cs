@@ -1,7 +1,7 @@
 ﻿using System;
 namespace TestAPI.Models
 {
-    public class ToDoItem
+    public class TodoItem
     {
         public long Id { get; set; } //setting up the primary key for the database
         public string Name { get; set; }

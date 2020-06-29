@@ -26,21 +26,21 @@ namespace TestAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ToDoItem>>> GetToDoItems()
         {
-            return await _context.ToDoItems.ToListAsync();
+            return await _context.TodoItem.ToListAsync();
         }
 
         // GET: api/ToDoItem/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ToDoItem>> GetToDoItem(long id)
         {
-            var toDoItem = await _context.ToDoItems.FindAsync(id);
+            var todoItem = await _context.TodoItems.FindAsync(id);
 
-            if (toDoItem == null)
+            if (todoItem == null)
             {
                 return NotFound();
             }
 
-            return toDoItem;
+            return todoItem;
         }
 
         // PUT: api/ToDoItem/5
@@ -79,13 +79,15 @@ namespace TestAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<ToDoItem>> PostToDoItem(ToDoItem toDoItem)
+        public async Task<ActionResult<ToDoItem>> PostTodoItem(ToDoItem todoItem)
         {
-            _context.ToDoItems.Add(toDoItem);
+            _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
 
-            //return CreatedAtAction("GetToDoItem", new { id = toDoItem.Id }, toDoItem);
-            return CreatedAtAction(nameof(GetToDoItem), new { id = toDoItem.Id }, toDoItem);
+            return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+
+            //return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
+
             /* CreatedAtAction() should return an HTTP 201 status - HTTP POST method creates new resource on server
              * Adds a Location header to response. This specifies the URI of the newly made item
              * References GetToDoItem action to create Location header's URI
@@ -97,21 +99,21 @@ namespace TestAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<ToDoItem>> DeleteToDoItem(long id)
         {
-            var toDoItem = await _context.ToDoItems.FindAsync(id);
-            if (toDoItem == null)
+            var todoItem = await _context.TodoItems.FindAsync(id);
+            if (todoItem == null)
             {
                 return NotFound();
             }
 
-            _context.ToDoItems.Remove(toDoItem);
+            _context.TodoItems.Remove(todoItem);
             await _context.SaveChangesAsync();
 
-            return toDoItem;
+            return todoItem;
         }
 
         private bool ToDoItemExists(long id)
         {
-            return _context.ToDoItems.Any(e => e.Id == id);
+            return _context.TodoItems.Any(e => e.Id == id);
         }
     }
 }
