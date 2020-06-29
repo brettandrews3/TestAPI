@@ -15,6 +15,8 @@ namespace TestAPI.Controllers
     {
         private readonly ToDoContext _context;
 
+        public long Id { get; private set; }
+
         public ToDoItem(ToDoContext context)
         {
             _context = context;
@@ -45,9 +47,9 @@ namespace TestAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutToDoItem(long id, ToDoItem toDoItem)
+        public async Task<IActionResult> PutToDoItem(long Id, ToDoItem toDoItem)
         {
-            if (id != toDoItem.Id)
+            if (Id != toDoItem.Id)
             {
                 return BadRequest();
             }
@@ -60,7 +62,7 @@ namespace TestAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ToDoItemExists(id))
+                if (!ToDoItemExists(Id))
                 {
                     return NotFound();
                 }
@@ -82,7 +84,13 @@ namespace TestAPI.Controllers
             _context.ToDoItems.Add(toDoItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetToDoItem", new { id = toDoItem.Id }, toDoItem);
+            //return CreatedAtAction("GetToDoItem", new { id = toDoItem.Id }, toDoItem);
+            return CreatedAtAction(nameof(GetToDoItem), new { id = toDoItem.Id }, toDoItem);
+            /* CreatedAtAction() should return an HTTP 201 status - HTTP POST method creates new resource on server
+             * Adds a Location header to response. This specifies the URI of the newly made item
+             * References GetToDoItem action to create Location header's URI
+             * C# "nameof" keyword avoids hard-coding the action name in CreatedAtAction call
+             *  */
         }
 
         // DELETE: api/ToDoItem/5
