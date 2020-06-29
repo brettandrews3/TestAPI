@@ -1,19 +1,18 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore; //Unnecessary using statement?
+using Microsoft.EntityFrameworkCore;
 
 namespace TestAPI.Models
 {
+    //Here, my ToDoContext class inherits from the using statement with EF Core
     public class ToDoContext : DbContext
     {
-        internal object ToDoItem;
-
         public ToDoContext(DbContextOptions<ToDoContext> options)
             : base(options)
         {
 
         }
 
-        public DbSet<TodoItem> ToDoItems { get; set; }
+        public DbSet<TodoItem> TodoItems { get; set; }
         //Next, the DbContext needs to be registered with the dependency
         //injection (DI) containe. Container provides service to controllers.
     }

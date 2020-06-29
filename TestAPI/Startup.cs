@@ -29,7 +29,7 @@ namespace TestAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ToDoContext>(opt =>
-            opt.UseInMemoryDatabase("ToDoList")); //We're using an in-memory database here
+            opt.UseInMemoryDatabase("TodoList")); //We're using an in-memory database here **CHANGED TO LOWER CASE d
             services.AddControllers();
         }
 
