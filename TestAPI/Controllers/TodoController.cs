@@ -9,6 +9,11 @@ using TestAPI.Models;
 
 namespace TestAPI.Controllers
 {
+    /* Marking the class with ApiController attribute so the controller
+     * responds to web API requests.
+     * Code also uses dependency injection (DI) to inject the DB context into
+     * the controller as TodoContext, which uses each of the CRUD methods. */
+     
     [Route("api/[controller]")]
     [ApiController]
     public class TodoController : ControllerBase
@@ -82,7 +87,9 @@ namespace TestAPI.Controllers
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+            return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
+            // In this HTTP Post method, the method now gets the value for the to-do item
+            // from the body of the HTTP request. This lets us edit the Todo list from the webpage.
         }
 
         // DELETE: api/Todo/5
