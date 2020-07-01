@@ -11,27 +11,25 @@ namespace TestAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ToDoItem : ControllerBase
+    public class TodoController : ControllerBase
     {
-        private readonly ToDoContext _context;
+        private readonly TodoContext _context;
 
-        public long Id { get; private set; }
-
-        public ToDoItem(ToDoContext context)
+        public TodoController(TodoContext context)
         {
             _context = context;
         }
 
-        // GET: api/ToDoItem
+        // GET: api/Todo
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ToDoItem>>> GetToDoItems()
+        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
         {
-            return await _context.TodoItem.ToListAsync();
+            return await _context.TodoItems.ToListAsync();
         }
 
-        // GET: api/ToDoItem/5
+        // GET: api/Todo/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ToDoItem>> GetToDoItem(long id)
+        public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
         {
             var todoItem = await _context.TodoItems.FindAsync(id);
 
@@ -43,18 +41,18 @@ namespace TestAPI.Controllers
             return todoItem;
         }
 
-        // PUT: api/ToDoItem/5
+        // PUT: api/Todo/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutToDoItem(long Id, ToDoItem toDoItem)
+        public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
         {
-            if (Id != toDoItem.Id)
+            if (id != todoItem.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(toDoItem).State = EntityState.Modified;
+            _context.Entry(todoItem).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace TestAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ToDoItemExists(Id))
+                if (!TodoItemExists(id))
                 {
                     return NotFound();
                 }
@@ -75,29 +73,21 @@ namespace TestAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/ToDoItem
+        // POST: api/Todo
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<ToDoItem>> PostTodoItem(ToDoItem todoItem)
+        public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
         {
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
-
-            //return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
-
-            /* CreatedAtAction() should return an HTTP 201 status - HTTP POST method creates new resource on server
-             * Adds a Location header to response. This specifies the URI of the newly made item
-             * References GetToDoItem action to create Location header's URI
-             * C# "nameof" keyword avoids hard-coding the action name in CreatedAtAction call
-             *  */
         }
 
-        // DELETE: api/ToDoItem/5
+        // DELETE: api/Todo/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ToDoItem>> DeleteToDoItem(long id)
+        public async Task<ActionResult<TodoItem>> DeleteTodoItem(long id)
         {
             var todoItem = await _context.TodoItems.FindAsync(id);
             if (todoItem == null)
@@ -111,7 +101,7 @@ namespace TestAPI.Controllers
             return todoItem;
         }
 
-        private bool ToDoItemExists(long id)
+        private bool TodoItemExists(long id)
         {
             return _context.TodoItems.Any(e => e.Id == id);
         }
