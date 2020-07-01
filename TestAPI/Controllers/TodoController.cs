@@ -90,6 +90,11 @@ namespace TestAPI.Controllers
             return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
             // In this HTTP Post method, the method now gets the value for the to-do item
             // from the body of the HTTP request. This lets us edit the Todo list from the webpage.
+
+            /* CreatedAtAction() returns HTTP 201 status if it works, showing a new resource was created
+             * Adds Location header to the response and specifies the Uniform Resource Indicator(URI)
+             * Refers to GettodoItem action to create URI for Location header. nameof avoids hard-coding
+             * the action name made in the CreatedAtAction call. */
         }
 
         // DELETE: api/Todo/5
