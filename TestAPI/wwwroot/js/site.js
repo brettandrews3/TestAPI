@@ -7,6 +7,7 @@ function getItems() {
     fetch(uri)
         .then(response => response.json())
         .then(data => _displayItems(data))
+        //When web API returns successful status code, invoke _displayItems function 
         .catch(error => console.error('Unable to get items.', error));
 }
 
@@ -19,14 +20,15 @@ function addItem() {
         name: addNameTextbox.value.trim()
     };
 
-    // Now, here's the Read function of our CRUD
+    // Now, here's the Read function of our CRUD 
     fetch(uri, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-type': 'application/json'
         },
-        body: JSON.stringify(item) //Come back to translate what this does
+        body: JSON.stringify(item)
+        //JSON produced by passing object literal stored in 'item' to stringify func  
     })
         .then(response => response.json())
         .then(() => {
@@ -36,7 +38,8 @@ function addItem() {
         .catch(error => console.error('Unable to add item.', error));
 }
 
-// Here's the Delete function of our CRUD referenced in index.html:
+// Here's the Delete function of our CRUD referenced in index.html.
+// Set the request's 'method' option to DELETE and feed in the itemId in the fetch URL
 function deleteItem(id) {
     fetch(`${uri}/${id}`, {
         method: 'DELETE'
@@ -55,6 +58,8 @@ function displayEditForm(id) {
     document.getElementById('editForm').style.display = 'block'; //type of form
 }
 
+// Here's the Update command, which invokes PUT, the HTTP action verb
+// Route is suffixed with unique ID of the item to update, fetched by const itemId line  
 function updateItem() {
     const itemId = document.getElementById('edit-id').value;
     const item = {
@@ -64,7 +69,7 @@ function updateItem() {
     };
 
     fetch(`${uri}/${itemId}`, {
-        method: 'PUT', //Here's our RESTful command; go talk to JSON to complete */
+        method: 'PUT', //Here's our RESTful command; go talk to JSON to complete
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
