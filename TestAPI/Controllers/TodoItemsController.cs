@@ -14,13 +14,14 @@ namespace TestAPI.Controllers
      * Code also uses dependency injection (DI) to inject the DB context into
      * the controller as TodoContext, which uses each of the CRUD methods. */
      
-    [Route("api/[controller]")]
+    [Route("api/TodoItems")]
     [ApiController]
-    public class TodoController : ControllerBase
+    public class TodoItemsController : ControllerBase
     {
+        //Here, we privatize our connection _context so no outsiders can read it
         private readonly TodoContext _context;
 
-        public TodoController(TodoContext context)
+        public TodoItemsController(TodoContext context)
         {
             _context = context;
         }
@@ -33,7 +34,7 @@ namespace TestAPI.Controllers
         }
 
         // GET: api/Todo/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] //id is placeholder for unique ID of to-do item
         public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
         {
             var todoItem = await _context.TodoItems.FindAsync(id);
@@ -52,6 +53,7 @@ namespace TestAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
         {
+            //When we call the id for a to-do item, id's that don't exist get 404 error
             if (id != todoItem.Id)
             {
                 return BadRequest();

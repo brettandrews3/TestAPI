@@ -41,6 +41,11 @@ namespace TestAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            //1) Let's prepare to call the web API through JavaScript.
+            //First, we're adding 2 lines to enable default file mapping, serve static files:
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
