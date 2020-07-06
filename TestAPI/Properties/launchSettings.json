@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      // "launchUrl": "api/TodoItems", //original is "weatherforecast"; testing new URLs to work w/Postman
+      "launchUrl": "api/TodoItems", //original is "weatherforecast"; testing new URLs to work w/Postman
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,9 +20,8 @@
     "TestAPI": {
       "commandName": "Project",
       "launchBrowser": true,
-      // "launchUrl": "api/TodoItems",
-      "applicationUrl": "https://localhost:5001";
-      https: //localhost:5000",
+      "launchUrl": "api/TodoItems",
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -30,6 +29,5 @@
   }
 }
 /* 7/6/20 edit: I commented out the launchUrl at lines 15, 23 to force the app to
-   open at index.html. I also separated the 2 localhost http address at line 24,
-   checking to see whether that will fix the 404 error I get when I try to submit
-   an update through the app. As of this comment, the 404 error is still there. */
+   open at index.html. When I do this, I get "[]" on a blank screen. 
+   As of this comment, the 404 error is still there. */
